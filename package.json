@@ -1,0 +1,26 @@
+{
+  "name": "database-js-mysql",
+  "version": "1.0.0",
+  "description": "database-js wrapper for MySQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mlaanderson/database-js-mysql.git"
+  },
+  "keywords": [
+    "database-js",
+    "mysql"
+  ],
+  "author": "Michael Anderson <michael@anderson-clan.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mlaanderson/database-js-mysql/issues"
+  },
+  "homepage": "https://github.com/mlaanderson/database-js-mysql#readme",
+  "dependencies": {
+    "mysql": "^2.13.0"
+  }
+}
