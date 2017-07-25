@@ -29,7 +29,7 @@ var mysql = require('database-js-mysql');
 ~~~~
 ### With Database-js
 ~~~~
-var Database = require('database-js2');
+var Database = require('database-js2').Connection;
 
 (async () => {
     let connection, statement, rows;

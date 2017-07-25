@@ -1,6 +1,6 @@
 {
   "name": "database-js-mysql",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "database-js wrapper for MySQL",
   "main": "index.js",
   "scripts": {
