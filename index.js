@@ -1,10 +1,12 @@
 var mysql = require('mysql');
 
 var m_connection = Symbol('connection');
+var m_transaction = Symbol('transaction');
 
 class MySQL {
     constructor(connection) {
         this[m_connection] = connection;
+        this[m_transaction] = false;
     }
 
     query(sql) {
@@ -34,6 +36,65 @@ class MySQL {
                     resolve();
                 }
             });
+        });
+    }
+
+    isTransactionSupported() {
+        return true;
+    }
+
+    inTransaction() {
+        return this[m_transaction];
+    }
+
+    beginTransaction() {
+        var self = this;
+        if (this.inTransaction() == true) {
+            return Promise.resolve(false);
+        }
+        return new Promise((resolve, reject) => {
+            this.execute('START TRANSACTION')
+            .then(() => {
+                self[m_transaction] = true;
+                resolve(true);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+
+    commit() {
+        var self = this;
+        if (this.inTransaction() == false) {
+            return Promise.resolve(false);
+        }
+        return new Promise((resolve, reject) => {
+            this.execute('COMMIT')
+            .then(() => {
+                self[m_transaction] = false;
+                resolve(true);
+            })
+            .catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    rollback() {
+        var self = this;
+        if (this.inTransaction() == false) {
+            return Promise.resolve(false);
+        }
+        return new Promise((resolve, reject) => {
+            this.execute('ROLLBACK')
+            .then(() => {
+                self[m_transaction] = false;
+                resolve(true);
+            })
+            .catch(error => {
+                reject(error);
+            })
         });
     }
 }
