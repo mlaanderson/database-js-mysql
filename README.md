@@ -1,4 +1,6 @@
 # database-js-mysql
+[![Build Status](https://travis-ci.org/mlaanderson/database-js-mysql.svg?branch=master)](https://travis-ci.org/mlaanderson/database-js-mysql)
+
 MySQL wrapper for database-js
 ## About
 Database-js-mysql is a wrapper around the [mysql](https://github.com/mysqljs/mysql) package by Doug Wilson. It is intended to be used with the [database-js](https://github.com/mlaanderson/database-js) package. However it can also be used in stand alone mode. The only reason to do that would be to use [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).

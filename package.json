@@ -4,7 +4,7 @@
   "description": "database-js wrapper for MySQL",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,8 @@
   "homepage": "https://github.com/mlaanderson/database-js-mysql#readme",
   "dependencies": {
     "mysql": "^2.13.0"
+  },
+  "devDependencies": {
+    "database-js": "^3.0.2"
   }
 }
