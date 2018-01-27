@@ -8,21 +8,25 @@ var Connection = MySQL.open({
     Database: 'test'
 });
 
-(async function() {
-    try {
-        await Connection.execute('DROP TABLE IF EXISTS test1;');
-        await Connection.execute('CREATE TABLE test1 (fl_name varchar(32), fl_value varchar(32));');
-        await Connection.execute("INSERT INTO test1 VALUES('name', 'Michael Anderson');");
-        let data = await Connection.query("SELECT * FROM test1 WHERE fl_name = 'name';")
-        if (data.length != 1) {
-            throw new Error("Invalid data returned");
-        }
-    } catch (error) {
-        console.log("ERROR", error);
-        process.exit(1);
-    } finally {
-        await Connection.execute('DROP TABLE IF EXISTS test1;');
-        await Connection.close();
-        process.exit(0);
-    }
-})();
+function handleError(error) {
+    console.log("ERROR:", error);
+    process.exit(1);
+}
+
+Connection.execute('DROP TABLE IF EXISTS test1;').then(() => {
+    Connection.execute('CREATE TABLE test1 (fl_name varchar(32), fl_value varchar(32));').then(() => {
+        Connection.execute("INSERT INTO test1 VALUES('name', 'Michael Anderson');").then(() => {
+            Connection.query("SELECT * FROM test1 WHERE fl_name = 'name';").then(data => {
+                if (data.length != 1) {
+                    return handleError(new Error("Invalid data returned"));
+                }
+                Connection.execute('DROP TABLE IF EXISTS test1;').then(() => {
+                    Connection.close().then(() => {
+                        process.exit(0);
+                    }).catch(handleError);
+                }).catch(handleError);
+            }).catch(handleError);
+        }).catch(handleError);
+    }).catch(handleError);
+}).catch(handleError);
+
