@@ -1,5 +1,3 @@
-import { error } from 'util';
-
 var MySQL = require('.');
 
 
