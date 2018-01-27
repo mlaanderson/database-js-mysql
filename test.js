@@ -1,3 +1,5 @@
+import { error } from 'util';
+
 var MySQL = require('.');
 
 
@@ -20,8 +22,17 @@ promises.push(Connection.execute('DROP TABLE IF EXISTS test1; CREATE TABLE test1
                     });
                 })
             }
+        }).catch(error => {
+            console.error(error);
+            process.exit(1);
         }));
+    }).catch(error => {
+        console.error(error);
+        process.exit(1);
     }));
+}).catch(error => {
+    console.error(error);
+    process.exit(1);
 }));
 
 Promise.all(promises).then(() => {
