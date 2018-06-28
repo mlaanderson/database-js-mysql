@@ -17,7 +17,7 @@ class MySQL {
                     reject(error);
                 } else {
                     resolve(data);
-                }                
+                }
             });
         });
     }
@@ -104,10 +104,10 @@ module.exports = {
         let base = mysql.createConnection({
             host: connection.Hostname || 'localhost',
             port: parseInt(connection.Port) || 3306,
-            user: connection.Username,
+            user: connection.Username || 'root',
             password: connection.Password,
             database: connection.Database
-        })
+        });
         return new MySQL(base);
     }
 };
