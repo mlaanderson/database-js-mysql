@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/mlaanderson/database-js-mysql#readme",
   "dependencies": {
+    "database-js-common": "git+https://github.com/mlaanderson/database-js-common.git",
     "mysql": "^2.13.0"
   },
   "devDependencies": {

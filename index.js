@@ -101,13 +101,21 @@ class MySQL {
 
 module.exports = {
     open: function(connection) {
-        let base = mysql.createConnection({
+        const options = {
             host: connection.Hostname || 'localhost',
             port: parseInt(connection.Port) || 3306,
             user: connection.Username || 'root',
             password: connection.Password,
             database: connection.Database
-        });
+        };
+
+        if (connection.Parameters) {
+            const parseConnectionParams = require('database-js-common').parseConnectionParams;
+            const extraParams = parseConnectionParams(connection.Parameters, true);
+            Object.assign(options, extraParams);
+        }
+
+        let base = mysql.createConnection(options);
         return new MySQL(base);
     }
 };
