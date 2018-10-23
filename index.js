@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+var fs = require('fs');
 
 var m_connection = Symbol('connection');
 var m_transaction = Symbol('transaction');
@@ -113,6 +114,18 @@ module.exports = {
             const parseConnectionParams = require('database-js-common').parseConnectionParams;
             const extraParams = parseConnectionParams(connection.Parameters, true);
             Object.assign(options, extraParams);
+        }
+
+        if (options.ssl) {
+            if (options.ssl.ca && fs.existsSync(options.ssl.ca)) {
+                options.ssl.ca = fs.readFileSync(options.ssl.ca);
+            }
+            if (options.ssl.key && fs.existsSync(options.ssl.key)) {
+                options.ssl.key = fs.readFileSync(options.ssl.key);
+            }
+            if (options.ssl.cert && fs.existsSync(options.ssl.cert)) {
+                options.ssl.cert = fs.readFileSync(options.ssl.cert);
+            }
         }
 
         let base = mysql.createConnection(options);
