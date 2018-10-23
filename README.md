@@ -59,6 +59,39 @@ var Database = require('database-js').Connection;
 })();
 ```
 
+#### With SSL
+
+If you need to support SSL for your MySQL connection (for AWS RDS, for example), you can add extra params:
+
+```js
+var Database = require('database-js').Connection;
+
+(async () => {
+    let connection, statement, rows;
+    connection = new Database('mysql://my_secret_username:my_secret_password@localhost:3306/my_top_secret_database?ssl[ca]=%2Fpath%2Fto%2Fca.pem');
+
+    try {
+        statement = await connection.prepareStatement("SELECT * FROM tablea WHERE user_name = ?");
+        rows = await statement.query('not_so_secret_user');
+        console.log(rows);
+    } catch (error) {
+        console.log(error);
+    } finally {
+        await connection.close();
+    }
+})();
+```
+
+Note that `ssl[ca]`, `ssl[key]` and `ssl[cert]` will be checked for file paths
+and loaded:
+
+```js
+// The query parameters are loaded into an 'options' object
+if (options.ssl.ca && fs.existsSync(options.ssl.ca)) {
+    options.ssl.ca = fs.readFileSync(options.ssl.ca);
+}
+```
+
 ## License
 
 [MIT](LICENSE)
